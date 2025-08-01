@@ -1,0 +1,41 @@
+﻿@model List<Invoice>
+
+    <h1 class="text-center">List of Invoices</h1>
+    
+    <a class="btn btn-primary mb-1" asp-controller="Invoices" asp-action="Create" >New Invoice</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Invoice No</th>
+                <th>Status</th>
+                <th>Client</th>
+                <th>Total Price</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var invoice in Model)
+            {
+            decimal totalPrice = invoice.Quantity * invoice.UnitPrice;
+
+                <tr>
+                    <td>@invoice.Id</td>
+                    <td>@invoice.Number</td>
+                    <td>@invoice.Status</td>
+                    <td>@invoice.ClientName</td>
+                    <td>@(totalPrice)$</td>
+                    <td>@invoice.IssueDate?.ToString("dd/MM/yyyy")</td>
+                    <td>@invoice.DueDate?.ToString("dd/MM/yyyy")</td>
+
+                    <td style=" white-space:nowrap">
+                        <a class="btn btn-primary btn-sm" asp-controller="Invoices" asp-action="Edit" asp-route-id="@invoice.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Invoices" asp-action="Delete" asp-route-id="@invoice.Id">Delete</a>
+                    </td>
+                </tr>
+        }
+        </tbody>
+    </table>

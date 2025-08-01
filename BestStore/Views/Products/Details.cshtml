@@ -1,0 +1,28 @@
+﻿@model BestStore.Models.Product
+
+@{
+}
+
+<h2 class="text-center mb-4">Product Details</h2>
+
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 24rem;">
+        <img class="card-img-top" src="~/products/@Model.ImageFileName" alt="@Model.Name" />
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">
+                <strong>Brand:</strong> @Model.Brand<br />
+                <strong>Category:</strong> @Model.Category<br />
+                <strong>Price:</strong> @Model.Price.ToString("C")<br />
+                <strong>Weight:</strong> @Model.Weight.ToString("F2") kg<br />
+                <strong>Created At:</strong> @Model.CreatedAt.ToString("MM/dd/yyyy")<br />
+            </p>
+            <p class="card-text">
+                <strong>Description:</strong><br />
+                @Model.Description
+            </p>
+            <a asp-action="Index" asp-controller="Products" class="btn btn-secondary">Back to List</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+</div>

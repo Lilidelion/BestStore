@@ -1,0 +1,98 @@
+﻿@model List<Product>
+@{
+
+}
+
+<h2 class="text-center mb-5">List of Products</h2>
+
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn btn-primary asp-controller="Products" asp-action="Create">New Product</a>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+<form method="get" asp-controller="Products" asp-action="Index" class="mb-4" style="text-align:center;">
+    <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="🔍 Tìm kiếm sản phẩm..." class="form-control" style="max-width: 400px; margin: auto;" />
+    <button type="submit" class="btn btn-primary mt-2">Tìm kiếm</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Created At</th>
+            <th>Weight</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Brand</td>
+                <td>@product.Category</td>
+                <td>@(product.Price)$</td>
+                <td><img src="/products/@product.ImageFileName" width="100"/></td>
+                <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                <td>@product.Weight.ToString("F2") kg</td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-info btn-sm" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">Details</a>
+                    <a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+<nav class="mt-4" aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @{
+            int currentPage = ViewBag.CurrentPage ?? 1;
+            int totalPages = ViewBag.TotalPages ?? 1;
+        }
+
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-searchString="@ViewData["CurrentFilter"]"
+               asp-route-page="@(currentPage - 1)">
+                Previous
+            </a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-searchString="@ViewData["CurrentFilter"]"
+                   asp-route-page="@i">
+                    @i
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-searchString="@ViewData["CurrentFilter"]"
+               asp-route-page="@(currentPage + 1)">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,108 @@
+﻿@model InvoiceDTO
+
+<h1 class="text-center mb-3">Edit Invoice</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-2 mb-3">
+        <!-- Invoice Details -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">Invoice Details</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Invoice No</label>
+                        <input class="form-control" asp-for="Number" />
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Payment Status</label>
+                        <select class="form-select" asp-for="Status">
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Issue Date</label>
+                        <input class="form-control" asp-for="IssueDate" type="date" />
+                        <span asp-validation-for="IssueDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Due Date</label>
+                        <input class="form-control" asp-for="DueDate" type="date" />
+                        <span asp-validation-for="DueDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Details -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">Client Details</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Client</label>
+                        <input class="form-control" asp-for="ClientName" />
+                        <span asp-validation-for="ClientName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" asp-for="Phone" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input class="form-control" asp-for="Address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service -->
+    <div class="card mb-3">
+        <div class="card-header">Service Details</div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <label class="form-label">Service</label>
+                    <input class="form-control" asp-for="Service" />
+                    <span asp-validation-for="Service" class="text-danger"></span>
+                </div>
+
+                <div class="col-sm-4">
+                    <label class="form-label">Unit Price</label>
+                    <input class="form-control" asp-for="UnitPrice" />
+                    <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                </div>
+
+                <div class="col-sm-4">
+                    <label class="form-label">Quantity</label>
+                    <input class="form-control" asp-for="Quantity" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success me-2">Update</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+    </div>
+</form>

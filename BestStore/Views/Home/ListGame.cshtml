@@ -1,0 +1,158 @@
+﻿@{
+    ViewData["Title"] = "Game Library";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // hoặc bỏ dòng này nếu không dùng layout
+}
+
+<style>
+    body {
+        background-color: #1b2838;
+        font-family: Arial, sans-serif;
+    }
+
+    .game-library-title {
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 20px;
+        padding: 0 20px 40px;
+    }
+
+    .game-card {
+        background-color: #2a475e;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+
+    .game-card:hover {
+        transform: scale(1.05);
+    }
+
+    .game-cover {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .game-title {
+        color: white;
+        font-size: 14px;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+        min-height: 50px;
+    }
+</style>
+
+<div class="game-library-title">Steam Library</div>
+<div class="game-library-title">
+    Với sự hợp tác giữa chúng tôi và các nhà phát triển game indie, khi bạn mua sản phẩm từ cửa hàng, bạn sẽ nhận được danh sách game đi kèm. Chúng tôi hy vọng khách hàng sẽ có những trải nghiệm thú vị!
+</div>
+<!-- This is a simple game library page with a grid layout for displaying games -->
+<!-- Each game card includes a cover image and title, with hover effects for interactivity -->
+
+<div class="game-grid">
+    <div class="game-card">
+        <a href="https://store.steampowered.com/app/884260/Akane/" target="_blank">
+        <img class="game-cover" src="/images/games/Akane.png" alt="AKANE" />
+        </a>
+        <div class="game-title">AKANE(2018)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/Ann.png" alt="Ann" />
+        <div class="game-title">Ann(2021)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/hello_charlotte.png" alt="Hello Charlotte EP2" />
+        <div class="game-title">Hello Charlotte EP2(2016)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/holocure.png" alt="Holocure" />
+        <div class="game-title">HoloCure(2022)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/LittleNightmareII.png" alt="LittleNightmareII" />
+        <div class="game-title">Little Nightmare II(2021)</div>
+    </div>
+    <!-- Add more game cards below -->
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/gris.png" alt="Gris" />
+        <div class="game-title">Gris(2018)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/reverse_1999.png" alt="Reserve 1999" />
+        <div class="game-title">Reserve 1999(2023)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/wuthering_wave.jpg" alt="wuthering wave" />
+        <div class="game-title">wuthering wave(2024)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/katawa shoujo.png" alt="Katawa shoujo" />
+        <div class="game-title">Katawa shoujo(2012)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/mad_father.png" alt="Mad Father" />
+        <div class="game-title">Mad Father(2016)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/Cureocity.jpg" alt="Cureocity" />
+        <div class="game-title">Cureocity(2024)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/Eternal_Senia.png" alt="Eternal Senia" />
+        <div class="game-title">Eternal senia(2015)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/crypt_necrodancer.jpg" alt="Crypt of the necrodancer" />
+        <div class="game-title">Crypt of the necrodancer(2015)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/the_mr.rabbit.png" alt="the mr.rabbit" />
+        <div class="game-title">the mr.rabbit magic show(2025)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/AT.jpg" alt="AT" />
+        <div class="game-title">Abnormal Treatment(2019)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/wot.jpg" alt="wot" />
+        <div class="game-title">world of tank(2011)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/misao.png" alt="Misao" />
+        <div class="game-title">Misao(2017)</div>
+    </div>
+    <div class="game-card">
+        <img class="game-cover" src="/images/games/lily.png" alt="lily" />
+        <div class="game-title">lily'well (2021)</div>
+    </div>
+    <div class="game-card">
+        <a href="https://store.steampowered.com/app/2396980/Fatestay_night_REMASTERED/" target="_blank">
+        <img class="game-cover" src="/images/games/fate.png" alt="Fate" />
+        </a>
+        <div class="game-title">Fate/stay night remastered(2024)</div>
+    </div>
+    <div class="game-card">
+        <a href="https://store.steampowered.com/app/1150690/OMORI/" target="_blank">
+            <img class="game-cover" src="/images/games/omori.png" alt="Omori" />
+        </a>
+        <div class="game-title">Omori (2019)</div>
+    </div>
+
+    <div class="game-card">
+        <a href="https://store.steampowered.com/app/208650/Batman_Arkham_Knight/" target="_blank">
+        <img class="game-cover" src="/images/games/batman .jpg" alt="Batman arkham knight" />
+        </a>
+        <div class="game-title">Batman arkham knight(2015)</div>
+    </div>
+</div>

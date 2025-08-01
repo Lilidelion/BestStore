@@ -1,0 +1,154 @@
+﻿<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .product-card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+        .product-card:hover {
+            transform: scale(1.03);
+        }
+
+    .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: contain;
+        background-color: #fafafa;
+    }
+
+    .product-name {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 10px 0 5px 0;
+        color: #333;
+    }
+
+    .product-description {
+        font-size: 14px;
+        color: #666;
+        padding: 0 10px;
+        margin-bottom: 10px;
+        flex-grow: 1;
+    }
+
+    .product-brand,
+    .product-category {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 4px;
+    }
+
+    .product-price {
+        color: #e91e63;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .order-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        margin: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .order-button:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<h2 style="text-align:center; margin-top:20px;">Danh sách sản phẩm</h2>
+
+<form method="get" asp-controller="Products" asp-action="Index" class="mb-4" style="text-align:center;">
+    <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="🔍 Tìm kiếm sản phẩm..." class="form-control" style="max-width: 400px; margin: auto;" />
+    <button type="submit" class="btn btn-primary mt-2">Tìm kiếm</button>
+</form>
+
+<div class="product-grid">
+    @foreach (var product in Model)
+    {
+        <div class="product-card">
+            <img src="~/products/@product.ImageFileName" alt="@product.Name" class="product-image" />
+
+            <div class="product-name">@product.Name</div>
+
+            <div class="product-description">@product.Description</div>
+
+            <div class="product-brand"><strong>Hãng:</strong> @product.Brand</div>
+            <div class="product-category"><strong>Loại:</strong> @product.Category</div>
+
+            <div class="product-price">@product.Price.ToString("N2") $</div>
+
+
+            <form asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" method="post">
+                <input type="hidden" name="productId" value="@product.Id" />
+                <input type="hidden" name="name" value="@product.Name" />
+                <input type="hidden" name="price" value="@product.Price" />
+                <button type="submit" class="order-button">Xem chi tiết sản phẩm</button>
+            </form>
+        </div>
+    }
+</div>
+<nav class="mt-4" aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @{
+            int currentPage = ViewBag.CurrentPage ?? 1;
+            int totalPages = ViewBag.TotalPages ?? 1;
+        }
+
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-searchString="@ViewData["CurrentFilter"]"
+               asp-route-page="@(currentPage - 1)">
+                Previous
+            </a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-searchString="@ViewData["CurrentFilter"]"
+                   asp-route-page="@i">
+                    @i
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-searchString="@ViewData["CurrentFilter"]"
+               asp-route-page="@(currentPage + 1)">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+

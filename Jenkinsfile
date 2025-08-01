@@ -5,7 +5,7 @@ pipeline {
         stage('Clone') {
             steps {
                 echo 'Cloning source code'
-                git branch: 'main', url: 'https://github.com/LiLyTampone/ProjectCart.git'
+                git branch: 'main', url: 'https://github.com/LiLyTampone/BestStore.git'
             }
         }
 

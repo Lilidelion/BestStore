@@ -3,7 +3,7 @@ using BestStore.Models;
 using BestStore.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Prometheus; // 👈 Thêm dòng này
+using Prometheus; // Thêm dòng này
 using System;
 
 var builder = WebApplication.CreateBuilder(args);

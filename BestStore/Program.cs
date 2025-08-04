@@ -1,20 +1,31 @@
-using BestStore.Data;
+﻿using BestStore.Data;
 using BestStore.Models;
 using BestStore.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Prometheus; // 👈 Thêm dòng này
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Chỉ định kết nối phù hợp (Docker hoặc Local)
+var isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+var connectionString = isDocker
+    ? builder.Configuration.GetConnectionString("DockerConnection")
+    : builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Gọi đúng duy nhất 1 lần AddDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlServer(connectionString);
-});
+    options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure()));
+
 builder.Services.AddScoped<EmployeeService>();
+
+//builder.WebHost.UseUrls("http://0.0.0.0:80");
+
+// Cấu hình Identity
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
 {
     options.Password.RequireNonAlphanumeric = false;
@@ -26,26 +37,37 @@ builder.Services.AddIdentity<Users, IdentityRole>(options =>
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedPhoneNumber = false;
 })
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Auto migrate khi khởi động (dùng cho Dev/Test)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate(); // hoặc db.Database.EnsureCreated();
+}
+
+// Middleware cho lỗi và HSTS
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+//  Prometheus metrics middleware
+app.UseHttpMetrics(); //  Ghi log metrics cho toàn bộ HTTP request
 
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.MapMetrics(); // Prometheus metrics tại /metrics
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");

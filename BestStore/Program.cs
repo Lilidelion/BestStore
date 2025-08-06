@@ -3,7 +3,7 @@ using BestStore.Models;
 using BestStore.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Prometheus; // 👈 Thêm dòng này
+using Prometheus; // 
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +17,7 @@ var connectionString = isDocker
     ? builder.Configuration.GetConnectionString("DockerConnection")
     : builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Gọi đúng duy nhất 1 lần AddDbContext
+// Gọi AddDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure()));
 

@@ -14,11 +14,24 @@ namespace BestStore.Controllers
         }
 
         // GET: /Invoices
-        public IActionResult Index()
+        public IActionResult Index(string? searchString)
         {
-            var invoices = context.Invoices.ToList();
-            return View(invoices);
+            var invoices = context.Invoices.AsQueryable();
+
+            //if (!string.IsNullOrEmpty(searchString))
+          //  {
+              //  invoices = invoices.Where(i =>
+            //        i.ClientName.Contains(searchString) ||
+                //    i.Number.Contains(searchString) ||
+                  //  i.Service.Contains(searchString));
+           // }
+
+           // ViewData["CurrentFilter"] = searchString;
+
+            return View(invoices.ToList());
         }
+
+
 
         // GET: /Invoices/Create
         public IActionResult Create()

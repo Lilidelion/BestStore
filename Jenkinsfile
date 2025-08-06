@@ -42,7 +42,8 @@ pipeline {
                 echo 'Copying to IIS folder...'
                 // Nếu muốn stop IIS thì bỏ comment dòng dưới
                 // bat 'iisreset /stop'
-                bat 'xcopy "%WORKSPACE%\\publish" /E /Y /I /R "c:\\wwwroot\\myproject"'
+                powershell -Command "Copy-Item -Path '%WORKSPACE%\publish\*' -Destination 'C:\wwwroot\myproject' -Recurse -Force"
+
             }
         }
 

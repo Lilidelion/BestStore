@@ -55,7 +55,7 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    app.UseHsts();// Bật HSTS (HTTP Strict Transport Security)
 }
 
 app.UseHttpsRedirection();

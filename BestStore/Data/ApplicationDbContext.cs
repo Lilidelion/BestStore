@@ -29,9 +29,7 @@ namespace BestStore.Data
             .HasForeignKey(e => e.DesignationId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Product>()
-                .Property(p => p.Price)
-                .HasPrecision(18, 2);
+
 
             // Seed EmployeeTypes
             modelBuilder.Entity<EmployeeType>().HasData(
@@ -87,11 +85,7 @@ namespace BestStore.Data
                 new Employee { Id = 15, FullName = "James Minh", Email = "james@example.com", DepartmentId = 3, DesignationId = 9, HireDate = new DateTime(2021, 7, 21), DateOfBirth = new DateTime(1993, 3, 17), EmployeeTypeId = 3, Gender = "Male", Salary = 62000m }
                 );
 
-            modelBuilder.Entity<Product>().HasData(
-                new Product { Id = 1, Name = "Laptop", Brand = "Dell", Category = "Electronics", Price = 1200.00m, Description = "High performance laptop", ImageFileName = "dell_xps_13_plus.jpg", CreatedAt = DateTime.Now, Weight = 2.5m },
-                new Product { Id = 2, Name = "Smartphone", Brand = "Samsung", Category = "Electronics", Price = 800.00m, Description = "Latest model smartphone", ImageFileName = "dell_xps_13_plus.jpg", CreatedAt = DateTime.Now, Weight = 0.2m },
-                new Product { Id = 3, Name = "Headphones", Brand = "Sony", Category = "Accessories", Price = 150.00m, Description = "Noise-cancelling headphones", ImageFileName = "galaxy_s24_ultra.jpg", CreatedAt = DateTime.Now, Weight = 0.3m }
-            );
+            
         }
     }
 }

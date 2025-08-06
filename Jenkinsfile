@@ -37,15 +37,17 @@ pipeline {
             }
         }
 
-        stage('Copy to IIS Folder') {
-            steps {
-                echo 'Copying to IIS folder...'
-                // Nếu muốn stop IIS thì bỏ comment dòng dưới
-                // bat 'iisreset /stop'
-                powershell -Command "Copy-Item -Path '%WORKSPACE%\publish\*' -Destination 'C:\wwwroot\myproject' -Recurse -Force"
+stage('Copy to IIS Folder') {
+    steps {
+        echo 'Copying to IIS folder...'
+        // Nếu muốn stop IIS thì bỏ comment dòng dưới
+        // bat 'iisreset /stop'
+        powershell '''
+            Copy-Item -Path "$env:WORKSPACE/publish/*" -Destination "C:/wwwroot/myproject" -Recurse -Force
+        '''
+    }
+}
 
-            }
-        }
 
         stage('Deploy to IIS') {
             steps {

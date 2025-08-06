@@ -42,9 +42,7 @@ stage('Copy to IIS Folder') {
         echo 'Copying to IIS folder...'
         // Nếu muốn stop IIS thì bỏ comment dòng dưới
         // bat 'iisreset /stop'
-        powershell '''
-            Copy-Item -Path "$env:WORKSPACE/publish/*" -Destination "C:/wwwroot/myproject" -Recurse -Force
-        '''
+  bat 'xcopy "%WORKSPACE%\\publish" /E /Y /I /R "c:\\wwwroot\\myproject"'
     }
 }
 

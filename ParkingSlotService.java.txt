@@ -1,0 +1,63 @@
+package com.pms.service;
+
+import com.pms.model.ParkingSlot;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class ParkingSlotService {
+    private List<ParkingSlot> slotList = new ArrayList<>();
+
+    // Thêm chỗ đỗ xe
+    public void addParkingSlot(ParkingSlot slot) {
+        slotList.add(slot);
+        System.out.println("Đã thêm chỗ đỗ xe: " + slot.getSlotId());
+    }
+
+    // Xóa chỗ đỗ xe theo ID
+    public boolean removeParkingSlot(int slotId) {
+        Optional<ParkingSlot> slotToRemove = slotList.stream()
+            .filter(slot -> slot.getSlotId() == slotId)
+            .findFirst();
+        if (slotToRemove.isPresent()) {
+            slotList.remove(slotToRemove.get());
+            System.out.println("Đã xóa chỗ đỗ xe: " + slotId);
+            return true;
+        } else {
+            System.out.println("Không tìm thấy chỗ đỗ xe với ID: " + slotId);
+            return false;
+        }
+    }
+
+    // Cập nhật thông tin chỗ đỗ xe
+    public boolean updateParkingSlot(ParkingSlot updatedSlot) {
+        for (int i = 0; i < slotList.size(); i++) {
+            if (slotList.get(i).getSlotId() == updatedSlot.getSlotId()) {
+                slotList.set(i, updatedSlot);
+                System.out.println("Đã cập nhật chỗ đỗ xe: " + updatedSlot.getSlotId());
+                return true;
+            }
+        }
+        System.out.println("Không tìm thấy chỗ đỗ xe để cập nhật: " + updatedSlot.getSlotId());
+        return false;
+    }
+
+    // Tìm kiếm chỗ đỗ xe theo ID
+    public ParkingSlot findParkingSlotById(int slotId) {
+        return slotList.stream()
+            .filter(slot -> slot.getSlotId() == slotId)
+            .findFirst()
+            .orElse(null);
+    }
+
+    // Xem danh sách các chỗ đỗ trống
+    public List<ParkingSlot> getAvailableSlots() {
+        List<ParkingSlot> availableSlots = new ArrayList<>();
+        for (ParkingSlot slot : slotList) {
+            if (!slot.isStatus()) { // status = false nghĩa là đang trống
+                availableSlots.add(slot);
+            }
+        }
+        return availableSlots;
+    }
+}
